@@ -1,0 +1,11 @@
+.data/
+**/.venv/
+**/node_modules/
+**/__pycache__/
+**/.pytest_cache/
+**/.ruff_cache/
+web/dist/
+*.log
+backend/.env
+legacy/
+artifacts/tmp/

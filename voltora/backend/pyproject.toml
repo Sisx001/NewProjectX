@@ -1,0 +1,32 @@
+[project]
+name = "voltora-api"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.20.1",
+    "argon2-cffi>=25.1.0",
+    "cryptography>=50.0.2",
+    "email-validator>=2.3.0",
+    "fastapi>=0.162.2",
+    "httpx>=0.28.1",
+    "psycopg[binary]>=3.3.8",
+    "pydantic-settings>=2.16.2",
+    "pyotp>=2.10.0",
+    "python-multipart>=0.0.33",
+    "sqlalchemy>=2.0",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "respx>=0.23.1",
+    "ruff>=0.17.4",
+]
+[tool.pytest.ini_options]
+testpaths=["tests"]
+addopts="-q"
+
+[tool.ruff]
+line-length=120
+target-version="py312"
