@@ -14,6 +14,17 @@
       "env": {
         "PATH": "/home/appuser/.npm-global/bin:/home/appuser/.local/bin:/home/appuser/tools/bin:/usr/local/bin:/usr/bin:/bin"
       }
+    },
+    "x64dbg": {
+      "command": "/home/appuser/tools/bin/x64dbg-headless",
+      "args": []
+    },
+    "netcoredbg": {
+      "command": "/home/appuser/tools/netcoredbg/netcoredbg",
+      "args": ["--server"],
+      "env": {
+        "DOTNET_SYSTEM_GLOBALIZATION_INVARIANT": "1"
+      }
     }
   }
 }
