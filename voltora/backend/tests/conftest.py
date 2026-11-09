@@ -4,7 +4,7 @@ import os
 import tempfile
 
 os.environ.setdefault("VOLTORA_ENV", "test")
-os.environ.setdefault("VOLTORA_DATABASE_URL", "postgresql+psycopg://voltora@127.0.0.1:5433/voltora_test")
+os.environ.setdefault("VOLTORA_DATABASE_URL", "postgresql+psycopg://voltora@127.0.0.1:5433/" + os.environ.get("VOLTORA_TEST_DB", "voltora_test"))
 os.environ.setdefault("VOLTORA_DATA_DIR", tempfile.mkdtemp(prefix="voltora-test-"))
 
 import pyotp  # noqa: E402
