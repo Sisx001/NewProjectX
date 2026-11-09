@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Cotton panjabi illustration">
+  <rect width="800" height="800" fill="#e9e6f0"/>
+  <ellipse cx="400" cy="660" rx="230" ry="22" fill="#000" opacity=".07"/>
+  <path d="M300 160 L225 215 L180 330 L250 360 L282 310 L270 640 L530 640 L518 310 L550 360 L620 330 L575 215 L500 160 Q400 215 300 160Z" fill="#3b4a78"/>
+  <path d="M370 170 L430 170 L420 360 L380 360Z" fill="#2f3b63"/>
+  <g fill="#e9e6f0" opacity=".85"><circle cx="400" cy="215" r="6"/><circle cx="400" cy="265" r="6"/><circle cx="400" cy="315" r="6"/></g>
+  <path d="M282 310 L270 640" stroke="#2f3b63" stroke-width="3" opacity=".5"/>
+</svg>
