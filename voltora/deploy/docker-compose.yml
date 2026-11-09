@@ -1,0 +1,83 @@
+# VOLTORA production stack: PostgreSQL 16 + API/web + Caddy (automatic HTTPS).
+#   cp deploy/.env.example deploy/.env   # then fill the generated secrets (commands inside)
+#   docker compose --env-file deploy/.env -f deploy/docker-compose.yml up -d --build
+# UNVERIFIED in the authoring environment (no Docker daemon): validate with `docker compose config` first.
+name: voltora
+
+services:
+  db:
+    image: postgres:16-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: voltora
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in deploy/.env}
+      POSTGRES_DB: voltora
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U voltora -d voltora"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    networks: [internal]
+    # No `ports:` on purpose: the database is reachable only from the api container.
+
+  api:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: voltora:${VOLTORA_IMAGE_TAG:-local}
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      VOLTORA_ENV: production
+      VOLTORA_DATABASE_URL: postgresql+psycopg://voltora:${POSTGRES_PASSWORD}@db:5432/voltora
+      VOLTORA_DATA_DIR: /data
+      # Caddy has a fixed address on the internal network so it is the only trusted proxy.
+      VOLTORA_TRUSTED_PROXIES: 172.29.0.10
+      VOLTORA_PUBLIC_URL: https://${SITE_ADDRESS:?set SITE_ADDRESS in deploy/.env}
+      VOLTORA_ALLOWED_ORIGINS: https://${SITE_ADDRESS}
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - appdata:/data
+    networks: [internal]
+    expose: ["8000"]
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS}
+      ACME_EMAIL: ${ACME_EMAIL:-}
+      UPSTREAM: api:8000
+      CSP_SCRIPT_SRC_EXTRA: ${CSP_SCRIPT_SRC_EXTRA:-}
+      CSP_FRAME_SRC_EXTRA: ${CSP_FRAME_SRC_EXTRA:-}
+      CSP_CONNECT_SRC_EXTRA: ${CSP_CONNECT_SRC_EXTRA:-}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      internal:
+        ipv4_address: 172.29.0.10
+
+volumes:
+  pgdata:
+  appdata:
+  caddy_data:
+  caddy_config:
+
+networks:
+  internal:
+    ipam:
+      config:
+        - subnet: 172.29.0.0/24
