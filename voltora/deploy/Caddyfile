@@ -1,0 +1,45 @@
+# VOLTORA edge. One file for Docker (UPSTREAM=api:8000) and bare metal (default 127.0.0.1:8000).
+# Variables: SITE_ADDRESS (domain, or `localhost` for a local self-signed certificate), ACME_EMAIL, UPSTREAM,
+#            CSP_SCRIPT_SRC_EXTRA / CSP_FRAME_SRC_EXTRA / CSP_CONNECT_SRC_EXTRA (e.g. CAPTCHA or analytics origins).
+# UNVERIFIED in the authoring environment (no Caddy binary): run `caddy validate --config deploy/Caddyfile` first.
+{
+	email {$ACME_EMAIL:}
+}
+
+{$SITE_ADDRESS:localhost} {
+	encode zstd gzip
+
+	# Caddy overwrites X-Forwarded-* from untrusted clients, so the API sees the real peer address.
+	# Behind a CDN, add: servers { trusted_proxies static <cdn cidrs> } in the global block above.
+
+	request_body {
+		max_size 30MB
+	}
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "SAMEORIGIN"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(self)"
+		Cross-Origin-Opener-Policy "same-origin-allow-popups"
+		# The SPA self-hosts its fonts and scripts; React sets inline style attributes, hence style-src 'unsafe-inline'.
+		# form-action is intentionally not restricted: some payment gateways return via a form POST.
+		Content-Security-Policy "default-src 'self'; script-src 'self' {$CSP_SCRIPT_SRC_EXTRA:}; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' {$CSP_CONNECT_SRC_EXTRA:}; frame-src 'self' {$CSP_FRAME_SRC_EXTRA:}; frame-ancestors 'self'; base-uri 'self'; object-src 'none'"
+		-Server
+	}
+
+	@hashed path /assets/*
+	header @hashed Cache-Control "public, max-age=31536000, immutable"
+
+	reverse_proxy {$UPSTREAM:127.0.0.1:8000} {
+		health_uri /api/health
+		health_interval 15s
+		health_timeout 5s
+	}
+
+	log {
+		output stdout
+		format json
+	}
+}
