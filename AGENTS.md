@@ -63,8 +63,9 @@ Detailed playbooks live in `skills/`:
 - `skills/symbolic.md` — angr scripts
 - `skills/hex-formats.md` — ImHex patterns
 - `skills/windows-wine.md` — x64dbg headless, Wine quirks
+- `skills/defense-bla.md` — BLA hardening (blue side) + red-vs-blue loops
 
 ## Reference material
 
-Cloned under `~/re-lab/`: `rea`, `craft-anything`, `GhidraMCP`,
+Cloned under `~/re-lab/`: `rea`, `craft-anything`, `GhidraMCP`, `bla`,
 `awesome-ai-reverse-engineering`, `awesome-reverse-engineering`.

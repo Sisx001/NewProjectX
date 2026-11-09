@@ -59,6 +59,27 @@ Both cloned under `~/re-lab/`.
 |---|---|---|
 | [netcoredbg](https://github.com/Samsung/netcoredbg) | .NET Core debugger (DAP) | `netcoredbg` (v3.2.0) |
 
+## [Extra] Defense — BLA (Counter-REA)
+
+| Tool | Purpose | Install |
+|---|---|---|
+| [BLA](https://github.com/qybaihe/bla) | Adversarial shield protecting artifacts against RE agents | `bla` (v3.2.1) |
+
+BLA is the **red team's opponent**, not a companion: REA attacks, BLA defends
+(poison → exhaust → hallucinate). Both installed so the workbench can run
+full red-vs-blue loops:
+
+```sh
+bla audit targets/app          # how exposed is the artifact to REA?
+bla harden targets/app         # bankrupt-intensity hardening (default)
+bla defend targets/app         # full pipeline: inspect -> audit -> protect -> verify
+bla verify targets/app         # verify defense invariants + token amplification
+rea analyze targets/app        # then attack it from the red side
+```
+
+BLA MCP server (25 defense tools) is wired in `mcp.json`. See
+`skills/defense-bla.md` for the playbooks.
+
 ## Windows tools under Wine
 
 Wine 11.21 Staging installed user-space (`~/tools/wine`), prefix at `~/wine-prefix`.

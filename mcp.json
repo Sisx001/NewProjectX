@@ -25,6 +25,13 @@
       "env": {
         "DOTNET_SYSTEM_GLOBALIZATION_INVARIANT": "1"
       }
+    },
+    "bla": {
+      "command": "bla",
+      "args": ["mcp"],
+      "env": {
+        "PATH": "/home/appuser/.npm-global/bin:/usr/local/bin:/usr/bin:/bin"
+      }
     }
   }
 }
