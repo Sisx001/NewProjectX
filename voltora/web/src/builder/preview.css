@@ -1,0 +1,9 @@
+/* Preview canvas affordances (drawn inside the iframe). */
+.vp-box { position: fixed; pointer-events: none; z-index: 2147483000; border-radius: 2px; }
+.vp-box--hover { outline: 1px dashed #2b4bf2; outline-offset: -1px; }
+.vp-box--select { outline: 2px solid #2b4bf2; outline-offset: -2px; box-shadow: 0 0 0 4000px rgba(20, 20, 30, 0.04); }
+.vp-box__label { position: absolute; top: -22px; left: -2px; background: #2b4bf2; color: #fff; font: 600 11px/20px "JetBrains Mono Variable", ui-monospace, monospace; padding: 0 6px; border-radius: 3px 3px 0 0; white-space: nowrap; }
+.vp-banner { position: sticky; top: 0; z-index: 100; margin: 0; padding: 8px 16px; background: #16161a; color: #f4f3ef; font: 500 13px/1.4 "Instrument Sans Variable", system-ui, sans-serif; text-align: center; }
+.vp-note { padding: 64px 24px; text-align: center; color: var(--t-text-muted, #75757e); font-family: var(--t-font-body, system-ui); }
+.vp-error { max-width: 520px; margin: 15vh auto; padding: 24px; font-family: "Instrument Sans Variable", system-ui, sans-serif; }
+.vp-error h1 { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-size: 2.2rem; margin: 0 0 12px; }

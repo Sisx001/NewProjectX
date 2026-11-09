@@ -1,0 +1,14 @@
+**/node_modules
+**/.venv
+**/__pycache__
+**/.pytest_cache
+**/.ruff_cache
+web/dist
+web/e2e
+backend/.env
+backend/.data
+.data
+.git
+legacy
+artifacts
+deploy/.env
