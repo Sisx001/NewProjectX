@@ -112,9 +112,7 @@ def resolve_principal(request: Request, db: Session) -> Principal:
                 perms: frozenset[str] = frozenset()
                 if user.kind == "staff":
                     perms = _staff_permissions(db, user, store)
-                    if user.mfa_enabled_at and not sess.mfa_verified:
-                        perms = frozenset()
-                    elif not user.mfa_enabled_at and get_setting(db, store.id, REQUIRE_STAFF_MFA.key):
+                    if user.mfa_enabled_at and not sess.mfa_verified or not user.mfa_enabled_at and get_setting(db, store.id, REQUIRE_STAFF_MFA.key):
                         perms = frozenset()
                 if (utcnow() - sess.last_seen_at) > dt.timedelta(minutes=5):
                     sess.last_seen_at = utcnow()

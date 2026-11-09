@@ -1,0 +1,97 @@
+/* VOLTORA design system — foundation tokens.
+   System surfaces (admin, studio, installer) use --v-*; storefront themes map their package tokens onto --t-*. */
+@import "@fontsource-variable/instrument-sans";
+@import "@fontsource/instrument-serif/400.css";
+@import "@fontsource/instrument-serif/400-italic.css";
+@import "@fontsource/hind-siliguri/400.css";
+@import "@fontsource/hind-siliguri/600.css";
+@import "@fontsource-variable/jetbrains-mono";
+
+:root {
+  /* Type */
+  --v-font-sans: "Instrument Sans Variable", "Hind Siliguri", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --v-font-serif: "Instrument Serif", "Hind Siliguri", Georgia, serif;
+  --v-font-mono: "JetBrains Mono Variable", ui-monospace, "SFMono-Regular", monospace;
+  --v-text-xs: 0.75rem;
+  --v-text-sm: 0.8125rem;
+  --v-text-md: 0.875rem;
+  --v-text-base: 1rem;
+  --v-text-lg: 1.125rem;
+  --v-text-xl: 1.375rem;
+  --v-text-2xl: 1.75rem;
+  --v-text-3xl: 2.25rem;
+  --v-leading: 1.5;
+
+  /* Space (4px grid) */
+  --v-1: 4px; --v-2: 8px; --v-3: 12px; --v-4: 16px; --v-5: 20px; --v-6: 24px; --v-8: 32px; --v-10: 40px; --v-12: 48px; --v-16: 64px;
+
+  /* Shape */
+  --v-radius-sm: 6px;
+  --v-radius: 10px;
+  --v-radius-lg: 14px;
+  --v-radius-pill: 999px;
+
+  /* Light palette: warm paper + ink, one electric signal colour used sparingly */
+  --v-bg: #f4f3ef;
+  --v-surface: #ffffff;
+  --v-surface-2: #faf9f6;
+  --v-surface-sunken: #ecebe6;
+  --v-line: #e3e1da;
+  --v-line-strong: #cfccc2;
+  --v-ink: #16161a;
+  --v-ink-2: #45454d;
+  --v-ink-3: #75757e;
+  --v-signal: #c6f432;      /* VOLTORA voltage */
+  --v-signal-ink: #16161a;
+  --v-accent: #2b4bf2;      /* links, focus, selection */
+  --v-accent-soft: #e8ecff;
+  --v-success: #1d7f53; --v-success-soft: #e3f4ea;
+  --v-warning: #a3620a; --v-warning-soft: #fbf0dc;
+  --v-danger: #bf3a22;  --v-danger-soft: #fbe6e1;
+  --v-info: #2b4bf2;    --v-info-soft: #e8ecff;
+  --v-focus: 0 0 0 2px var(--v-surface), 0 0 0 4px var(--v-accent);
+  --v-shadow-1: 0 1px 0 rgba(22, 22, 26, 0.04), 0 1px 2px rgba(22, 22, 26, 0.06);
+  --v-shadow-2: 0 2px 4px rgba(22, 22, 26, 0.04), 0 8px 24px rgba(22, 22, 26, 0.08);
+  --v-shadow-3: 0 12px 48px rgba(22, 22, 26, 0.18);
+
+  /* Motion: short, purposeful, transform/opacity only */
+  --v-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --v-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --v-dur-1: 120ms;
+  --v-dur-2: 200ms;
+  --v-dur-3: 320ms;
+
+  --v-sidebar: 248px;
+  --v-topbar: 56px;
+  color-scheme: light;
+}
+
+[data-mode="dark"] {
+  --v-bg: #0f0f12;
+  --v-surface: #17171b;
+  --v-surface-2: #1c1c21;
+  --v-surface-sunken: #121215;
+  --v-line: #2a2a31;
+  --v-line-strong: #3a3a43;
+  --v-ink: #f2f1ec;
+  --v-ink-2: #c3c2bc;
+  --v-ink-3: #8d8c95;
+  --v-accent: #8ea2ff;
+  --v-accent-soft: #1f2440;
+  --v-success: #4fc38a; --v-success-soft: #14271e;
+  --v-warning: #e3a647; --v-warning-soft: #2b2114;
+  --v-danger: #ff7a62;  --v-danger-soft: #2e1814;
+  --v-info: #8ea2ff;    --v-info-soft: #1f2440;
+  --v-shadow-1: 0 1px 0 rgba(0, 0, 0, 0.4);
+  --v-shadow-2: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --v-shadow-3: 0 16px 48px rgba(0, 0, 0, 0.6);
+  color-scheme: dark;
+}
+
+[data-density="compact"] { --v-row: 36px; }
+:root, [data-density="comfortable"] { --v-row: 44px; }
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --v-dur-1: 0ms; --v-dur-2: 0ms; --v-dur-3: 0ms; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}

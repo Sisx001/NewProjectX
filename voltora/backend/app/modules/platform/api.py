@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import datetime as dt
 import platform as pyplatform
 import time
 
@@ -12,8 +11,17 @@ from sqlalchemy.orm import Session
 from ...config import CORE_VERSION, get_settings
 from ...core.deps import Principal, current_store, parse_uuid, principal, require, staff
 from ...core.errors import NotFound
-from ...core.services import (EVENT_TYPES, PERIODIC_JOBS, SETTINGS, audit, get_setting, limiter, set_settings,
-                              setting, verify_audit_chain)
+from ...core.services import (
+    EVENT_TYPES,
+    PERIODIC_JOBS,
+    SETTINGS,
+    audit,
+    get_setting,
+    limiter,
+    set_settings,
+    setting,
+    verify_audit_chain,
+)
 from ...db import get_db, utcnow
 from .models import AuditEvent, ConfigRevision, LogRecord, Notification, OutboxEvent, SettingValue
 
@@ -237,3 +245,26 @@ from .install import router as install_router  # noqa: E402
 
 extra_routers = [install_router]
 MODULE = {"title": "Platform", "description": "Store settings, audit trail, notifications, health, jobs, logs, installer"}
+
+
+@router.get("/admin/nav-counts")
+def nav_counts(db: Session = Depends(get_db), p: Principal = Depends(staff)):
+    from ...core.services import NAV_COUNTERS
+
+    out: dict[str, int] = {}
+    for fn in NAV_COUNTERS:
+        out.update(fn(db, p) or {})
+    return out
+
+
+@router.get("/admin/search")
+def admin_search(q: str = Query("", max_length=100), db: Session = Depends(get_db), p: Principal = Depends(staff)):
+    from ...core.services import SEARCHERS
+
+    q = q.strip()
+    if len(q) < 2:
+        return {"items": []}
+    items: list[dict] = []
+    for fn in SEARCHERS:
+        items.extend(fn(db, p, q) or [])
+    return {"items": items[:30]}

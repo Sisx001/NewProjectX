@@ -374,3 +374,10 @@ class Page:
 
     def dump(self):
         return {"items": self.items, "total": self.total, "page": self.page, "page_size": self.page_size, **self.extra}
+
+
+# ---------------------------------------------------------------- admin shell providers
+# NAV_COUNTERS: fn(db, principal) -> {"orders": 3}  (keys are admin nav paths; only meaningful queues)
+# SEARCHERS: fn(db, principal, q) -> [{"label", "sublabel", "path", "kind"}]  (must enforce permissions itself)
+NAV_COUNTERS: list[Callable] = []
+SEARCHERS: list[Callable] = []

@@ -1,0 +1,21 @@
+.i-wrap { min-height: 100dvh; display: grid; grid-template-columns: 300px 1fr; background: var(--v-bg); }
+.i-rail { background: var(--v-ink); color: var(--v-bg); padding: var(--v-8) var(--v-6); display: flex; flex-direction: column; gap: var(--v-8); }
+.i-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; counter-reset: s; flex: 1; }
+.i-rail li { counter-increment: s; display: flex; gap: 12px; align-items: center; padding: 8px 0; color: #8d8c95; font-weight: 520; }
+.i-rail li::before { content: counter(s); width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; border: 1px solid #3a3a43; }
+.i-rail li[data-done="true"] { color: #d7d6cf; }
+.i-rail li[data-done="true"]::before { content: "✓"; background: #2a2a31; }
+.i-rail li[aria-current="step"] { color: #fff; }
+.i-rail li[aria-current="step"]::before { background: var(--v-signal); color: var(--v-signal-ink); border-color: var(--v-signal); }
+.i-main { display: grid; align-items: start; justify-items: center; padding: 10vh var(--v-6) var(--v-10); }
+.i-card { width: min(560px, 100%); background: var(--v-surface); border: 1px solid var(--v-line); border-radius: var(--v-radius-lg); padding: var(--v-8); display: grid; gap: var(--v-5); }
+.i-card h1 { font-size: var(--v-text-2xl); }
+.i-checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.i-checks li { display: flex; gap: 12px; padding: 10px 12px; border-radius: var(--v-radius-sm); background: var(--v-surface-2); }
+.i-checks li[data-ok="true"] svg { color: var(--v-success); }
+.i-checks li[data-ok="false"] svg { color: var(--v-danger); }
+.i-checks li[data-warn="true"] svg { color: var(--v-warning); }
+.i-choice { display: flex; gap: 12px; padding: 14px; border: 1px solid var(--v-line-strong); border-radius: var(--v-radius); cursor: pointer; }
+.i-choice[data-on="true"] { border-color: var(--v-ink); box-shadow: inset 0 0 0 1px var(--v-ink); }
+.i-choice input { margin-top: 3px; accent-color: var(--v-ink); }
+@media (max-width: 820px) { .i-wrap { grid-template-columns: 1fr; } .i-rail { padding: var(--v-4); gap: var(--v-3); } .i-rail ol { display: flex; overflow-x: auto; gap: 12px; } .i-rail li { font-size: 12px; white-space: nowrap; } .i-rail > p { display: none; } .i-main { padding: var(--v-4); } .i-card { padding: var(--v-5); } }
