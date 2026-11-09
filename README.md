@@ -112,3 +112,48 @@ extension is ready but Burp cannot host it. Its AI review only reasons over traf
 - `DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1` (required by ILSpy, no libicu on host)
 - mitmproxy CA generated at `~/.mitmproxy/mitmproxy-ca-cert.pem`
 - Tool sources cloned under `~/re-lab/`
+
+## [07] Forensics & data carving
+
+| Tool | Purpose | Install |
+|---|---|---|
+| [YARA](https://github.com/VirusTotal/yara) | Pattern matching / rules | `yara-python` (v4.5.4) |
+| [Unicorn](https://github.com/unicorn-engine/unicorn) | CPU emulation | `unicorn` (v2.1.4) |
+| [Capstone](https://github.com/capstone-engine/capstone) | Disassembly framework | `capstone` (v5.0.7) |
+| [pefile](https://github.com/erocarrera/pefile) | PE parsing | `pefile` |
+| [z3](https://github.com/Z3Prover/z3) | Constraint solver | `z3-solver` |
+| [Volatility 3](https://github.com/volatilityfoundation/volatility3) | Memory forensics | `volatility3` (`vol`) |
+| [pwntools](https://github.com/Gallopsled/pwntools) | Exploit development | `pwntools` (`pwn`) |
+| [Scrapling](https://github.com/D4Vinci/Scrapling) | Adaptive web scraping | `scrapling` (v0.5.1; browser fetchers unavailable — CDN blocked) |
+| [UPX](https://github.com/upx/upx) | Packer/unpacker | `upx` (v5.3.0) |
+| [7-Zip](https://github.com/ip7z/7zip) | Archive engine | `7zz` (v26.06) |
+| [Detect It Easy](https://github.com/horsicq/DIE-engine) | Compiler/packer detection | `diec` (v4.0.0, wrapper with Qt5 libs + `-D` db path) |
+| [binwalk](https://github.com/ReFirmLabs/binwalk) | Firmware/data carving | `binwalk` (v3.1.0, cargo; built with `RUST_FONTCONFIG_DLOPEN=on`) |
+
+Quick use:
+
+```sh
+vol -f memory.dmp windows.info          # memory forensics
+binwalk firmware.bin                    # embedded content scan
+upx -d packed.exe                       # unpack
+diec /tmp/ls_test                       # detect compiler/packer
+python3 -c "import yara, unicorn, capstone, pefile, z3"  # all importable
+```
+
+## [08] Agent-side skills & site tooling
+
+| Tool | Purpose | Install |
+|---|---|---|
+| [unslop](https://github.com/heydamir/unslop) | Turns AI-looking UI into designed UI | `~/.claude/skills/unslop` |
+| [ponytail](https://github.com/dietrichgebert/ponytail) | Laziest-senior-dev discipline (6 skills: review/audit/debt/gain) | `~/.claude/skills/ponytail*` |
+| [api-anything](https://github.com/goodnight000/api-anything) | Turns websites into agent-callable APIs | configured via `npx api-anything setup` — **local-only mode** (nothing shared/reported) |
+| [ai-website-cloner-template](https://github.com/JCodesMore/ai-website-cloner-template) | Clone a site's look into a fresh project | `~/re-lab/ai-website-cloner-template` (deps installed, ready to copy per project) |
+| [Awesome-REA](https://github.com/reacher-z/Awesome-REA) | Curated RE list: web, games, apps, firmware | `~/re-lab/Awesome-REA` |
+
+## Reference material
+
+- [awesome-ai-reverse-engineering](https://github.com/zhuyansen/awesome-ai-reverse-engineering)
+- [awesome-reverse-engineering](https://github.com/morluto/awesome-reverse-engineering)
+- [Awesome-REA](https://github.com/reacher-z/Awesome-REA)
+
+All cloned under `~/re-lab/`.
