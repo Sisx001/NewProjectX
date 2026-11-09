@@ -5,8 +5,8 @@ import datetime as dt
 import uuid
 from typing import Any
 
-from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy import BigInteger, ForeignKey, Identity, Index, String, Text, UniqueConstraint
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
 from ...db import Base, IdMixin, TimestampMixin, utcnow
