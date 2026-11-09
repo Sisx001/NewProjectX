@@ -10,8 +10,17 @@ from sqlalchemy.orm import Session
 
 from ...config import get_settings
 from ...core import security as sec
-from ...core.deps import (CSRF_COOKIE, SESSION_COOKIE, Principal, client_ip, current_store, parse_uuid, require,
-                          resolve_principal, signed_in)
+from ...core.deps import (
+    CSRF_COOKIE,
+    SESSION_COOKIE,
+    Principal,
+    client_ip,
+    current_store,
+    parse_uuid,
+    require,
+    resolve_principal,
+    signed_in,
+)
 from ...core.errors import AppError, Conflict, Forbidden, NotFound, Unauthorized
 from ...core.rbac import ALL, BUILTIN_ROLES, PERMISSIONS, validate_permissions
 from ...core.services import Actor, audit, emit, event_type, limiter
