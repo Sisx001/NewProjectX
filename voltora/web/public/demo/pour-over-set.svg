@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Ceramic pour-over coffee set illustration">
+  <rect width="800" height="800" fill="#f1e8dd"/>
+  <ellipse cx="400" cy="660" rx="230" ry="22" fill="#000" opacity=".07"/>
+  <path d="M300 250 L500 250 L450 360 L350 360Z" fill="#fbf7f0" stroke="#d6c8b4" stroke-width="4"/>
+  <rect x="340" y="360" width="120" height="26" rx="6" fill="#e5d8c4"/>
+  <path d="M305 395 L495 395 L480 620 Q400 650 320 620Z" fill="#fbf7f0" stroke="#d6c8b4" stroke-width="4"/>
+  <path d="M490 440 Q570 445 560 515 Q552 560 478 560" fill="none" stroke="#d6c8b4" stroke-width="16" stroke-linecap="round"/>
+  <path d="M350 470 Q400 490 450 470 L444 560 Q400 575 356 560Z" fill="#6b4a35" opacity=".85"/>
+</svg>
