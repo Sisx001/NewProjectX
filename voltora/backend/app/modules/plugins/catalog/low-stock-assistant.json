@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "id": "voltora.low-stock-assistant",
+  "name": "Low-stock digest for AI assistants",
+  "version": "1.0.0",
+  "publisher": "VOLTORA",
+  "description": "Adds a low-stock digest tool that AI assistants can use, with your own stock threshold. Read-only; assign the tool to an assistant in AI Studio.",
+  "hostApi": ">=1.0.0 <2.0.0",
+  "capabilities": ["ai.tool"],
+  "permissions": ["inventory.read"],
+  "settings": {
+    "type": "object",
+    "properties": {
+      "threshold": {"type": "integer", "minimum": 0, "maximum": 100000, "default": 5, "title": "Treat as low stock at or below"}
+    },
+    "required": ["threshold"],
+    "additionalProperties": false
+  },
+  "extensions": {
+    "ai_tools": [
+      {"name": "low_stock_digest", "description": "Variants whose available stock is at or below the store's configured low-stock threshold.", "input_schema": {"type": "object", "properties": {"limit": {"type": "integer", "minimum": 1, "maximum": 50}}, "additionalProperties": false}, "permission": "inventory.read", "side_effect": "read", "handler": {"type": "core_alias", "tool": "inventory_low_stock", "args_from_settings": {"threshold": "threshold"}}}
+    ]
+  },
+  "license": "MIT",
+  "docs": "Enable, then add the tool “x_voltora_low_stock_assistant_low_stock_digest” to an assistant (e.g. Owner copilot).",
+  "changelog": "1.0.0 — first release."
+}
