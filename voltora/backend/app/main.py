@@ -139,7 +139,12 @@ def create_app(start_worker: bool | None = None) -> FastAPI:
         path = request.url.path
         if request.method in UNSAFE and path.startswith("/api/") and not path.startswith(CSRF_EXEMPT):
             origin = request.headers.get("origin")
-            if origin and origin not in s.allowed_origins and origin != f"{request.url.scheme}://{request.url.netloc}":
+            # Same-origin is judged against the Host the browser used (X-Forwarded-Host only from trusted proxies).
+            host = request.headers.get("host", "")
+            if request.client and request.client.host in s.trusted_proxies:
+                host = request.headers.get("x-forwarded-host", host).split(",")[0].strip()
+            origin_host = origin.split("://", 1)[-1] if origin else ""
+            if origin and origin not in s.allowed_origins and origin_host != host:
                 return JSONResponse({"error": {"code": "bad_origin", "message": "Cross-site request blocked"}},
                                     status_code=403)
             has_bearer = request.headers.get("authorization", "").lower().startswith("bearer ")
