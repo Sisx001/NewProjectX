@@ -54,6 +54,8 @@ rizin -A -c "afl; quit" target.bin   # one-shot
 
 ```python
 import angr
+# Note: unicorn emulation backend unavailable in this sandbox (unicornlib
+# load failure); CFG + symbolic exploration work, concrete emulation doesn't.
 proj = angr.Project("target.bin", auto_load_libs=False)
 cfg = proj.analyses.CFGFast()
 entry = proj.factory.entry_state()
