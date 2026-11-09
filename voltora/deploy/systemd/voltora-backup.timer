@@ -1,0 +1,10 @@
+[Unit]
+Description=Nightly VOLTORA backup (alternative to the in-app schedule; enable only one of them)
+
+[Timer]
+OnCalendar=*-*-* 02:30:00
+RandomizedDelaySec=900
+Persistent=true
+
+[Install]
+WantedBy=timers.target
