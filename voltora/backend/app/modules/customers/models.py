@@ -29,6 +29,7 @@ class Customer(IdMixin, TimestampMixin, Base):
     locale: Mapped[str] = mapped_column(String(10), default="en")
     is_test: Mapped[bool] = mapped_column(default=False)
     legacy_id: Mapped[str | None] = mapped_column(String(64), index=True)
+    erased_at: Mapped[dt.datetime | None] = mapped_column()
     __table_args__ = (UniqueConstraint("store_id", "user_id"),)
 
 
