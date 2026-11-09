@@ -1,0 +1,10 @@
+/var/log/voltora/*.log {
+    weekly
+    rotate 8
+    compress
+    delaycompress
+    missingok
+    notifempty
+    copytruncate
+    create 0640 voltora voltora
+}
