@@ -65,6 +65,13 @@ Detailed playbooks live in `skills/`:
 - `skills/windows-wine.md` — x64dbg headless, Wine quirks
 - `skills/defense-bla.md` — BLA hardening (blue side) + red-vs-blue loops
 
+## Extra skills
+
+- hallmark design skill installed at `~/.claude/skills/hallmark` — use when asked
+  to build/design pages; sources in `~/re-lab/hallmark`
+- Burp extension `sectiv-1.0.0.jar` staged at `~/tools/burp-extensions/` for the
+  user's desktop Burp Suite
+
 ## Reference material
 
 Cloned under `~/re-lab/`: `rea`, `craft-anything`, `GhidraMCP`, `bla`,

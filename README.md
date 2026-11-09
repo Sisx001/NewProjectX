@@ -93,6 +93,17 @@ has none and apt is unavailable.
   (Microsoft servers unreachable, wine-mono insufficient for ICorDebug).
   Decompile with ILSpy, debug .NET Core with netcoredbg.
 
+## [06] Agent skills & Burp
+
+| Tool | Purpose | Install |
+|---|---|---|
+| [hallmark](https://github.com/Nutlope/hallmark) | Anti-AI-slop design skill (50 themes, redesign/audit) | installed at `~/.claude/skills/hallmark` (v2.0.0) — invoke via `/hallmark <prompt>`, `/hallmark redesign <path>`, `/hallmark audit <path>` |
+| [burp-sectivai](https://github.com/zack0x01/burp-sectivai) | Skill-driven AI security review for Burp Suite (IDOR/XSS/SQLi/SSRF dashboard) | JAR staged at `~/tools/burp-extensions/sectiv-1.0.0.jar` — load via Burp → Extensions → Add → Java, then set AI provider key in its Settings tab |
+
+Sectiv notes: prebuilt JAR verified (Montoya API, Kotlin shadow jar). Burp Suite itself is a
+proprietary GUI app — run it on your desktop and load the staged JAR; in this sandbox the
+extension is ready but Burp cannot host it. Its AI review only reasons over traffic you select.
+
 ## Environment
 
 - Host: Debian 13, x86_64, user-space install (no root)
