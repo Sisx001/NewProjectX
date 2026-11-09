@@ -22,6 +22,7 @@ class Category(IdMixin, TimestampMixin, Base):
     is_active: Mapped[bool] = mapped_column(default=True)
     seo: Mapped[dict[str, Any]] = mapped_column(default=dict)
     legacy_id: Mapped[str | None] = mapped_column(String(64))
+    is_demo: Mapped[bool] = mapped_column(default=False)
     __table_args__ = (UniqueConstraint("store_id", "slug"),)
 
 
@@ -31,6 +32,7 @@ class Brand(IdMixin, TimestampMixin, Base):
     name: Mapped[str] = mapped_column(String(160))
     slug: Mapped[str] = mapped_column(String(160))
     logo_url: Mapped[str | None] = mapped_column(String(500))
+    is_demo: Mapped[bool] = mapped_column(default=False)
     __table_args__ = (UniqueConstraint("store_id", "slug"),)
 
 
@@ -51,7 +53,7 @@ class Product(IdMixin, TimestampMixin, Base):
     is_demo: Mapped[bool] = mapped_column(default=False, index=True)
     published_at: Mapped[dt.datetime | None] = mapped_column()
     legacy_id: Mapped[str | None] = mapped_column(String(64), index=True)
-    __table_args__ = (UniqueConstraint("store_id", "slug"),)
+    __table_args__ = (UniqueConstraint("store_id", "slug"), Index("ix_products_store_status", "store_id", "status"))
 
 
 class ProductCategory(Base):
