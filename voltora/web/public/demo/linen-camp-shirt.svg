@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Linen camp shirt illustration">
+  <rect width="800" height="800" fill="#e4ebe6"/>
+  <ellipse cx="400" cy="660" rx="230" ry="22" fill="#000" opacity=".07"/>
+  <path d="M285 185 L215 240 L165 345 L240 380 L272 330 L272 610 L528 610 L528 330 L560 380 L635 345 L585 240 L515 185 L440 215 L400 260 L360 215Z" fill="#9fb5a8"/>
+  <path d="M360 215 L400 260 L440 215 L420 205 L400 225 L380 205Z" fill="#86a08f"/>
+  <path d="M400 260 L400 610" stroke="#7d968a" stroke-width="3"/>
+  <g fill="#e8efe9"><circle cx="400" cy="320" r="7"/><circle cx="400" cy="400" r="7"/><circle cx="400" cy="480" r="7"/><circle cx="400" cy="560" r="7"/></g>
+</svg>
