@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "ghidra": {
+      "command": "python3",
+      "args": ["-m", "ghidra_mcp"],
+      "env": {
+        "JAVA_HOME": "/home/appuser/tools/jdk-25",
+        "GHIDRA_INSTALL_DIR": "/home/appuser/tools/ghidra_12.2_PUBLIC"
+      }
+    },
+    "rea": {
+      "command": "rea",
+      "args": ["mcp"],
+      "env": {
+        "PATH": "/home/appuser/.npm-global/bin:/home/appuser/.local/bin:/home/appuser/tools/bin:/usr/local/bin:/usr/bin:/bin"
+      }
+    }
+  }
+}
