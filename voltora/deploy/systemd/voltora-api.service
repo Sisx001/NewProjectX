@@ -1,0 +1,30 @@
+[Unit]
+Description=VOLTORA API and web app
+After=network-online.target postgresql.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=voltora
+Group=voltora
+WorkingDirectory=/opt/voltora/current/backend
+EnvironmentFile=/etc/voltora/voltora.env
+# One process: the outbox worker and periodic jobs run inside it. Do not raise --workers.
+ExecStart=/opt/voltora/current/backend/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=30
+
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+ReadWritePaths=/var/lib/voltora /var/log/voltora
+
+[Install]
+WantedBy=multi-user.target

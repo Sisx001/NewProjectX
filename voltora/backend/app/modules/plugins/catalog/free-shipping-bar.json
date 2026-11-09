@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "id": "voltora.free-shipping-bar",
+  "name": "Free-delivery progress bar",
+  "version": "1.0.0",
+  "publisher": "VOLTORA",
+  "description": "Shows shoppers how much more they need to add to reach your free-delivery threshold. Display only: set the same threshold in your shipping rates — this extension does not change shipping prices.",
+  "hostApi": ">=1.0 <2.0",
+  "capabilities": ["storefront.widget", "builder.component"],
+  "permissions": [],
+  "settings": {
+    "type": "object",
+    "properties": {
+      "threshold_minor": {"type": "integer", "minimum": 0, "maximum": 100000000, "default": 300000, "title": "Free-delivery threshold (minor units, e.g. 300000 = ৳3,000)", "x-public": true},
+      "message": {"type": "string", "maxLength": 160, "default": "Add {remaining} more for free delivery", "title": "Message while below the threshold ({remaining} is replaced)", "x-public": true},
+      "success_message": {"type": "string", "maxLength": 160, "default": "You've unlocked free delivery", "title": "Message once reached", "x-public": true}
+    },
+    "required": ["threshold_minor"],
+    "additionalProperties": false
+  },
+  "extensions": {
+    "builder_components": [
+      {
+        "type": "plugin.voltora.free-shipping-bar.progress",
+        "label": "Free-delivery progress",
+        "category": "commerce",
+        "description": "Progress bar toward the free-delivery threshold, driven by the live cart subtotal.",
+        "props": [
+          {"name": "threshold_minor", "type": "number", "label": "Threshold (minor units)", "default": 300000, "min": 0},
+          {"name": "message", "type": "text", "label": "Message", "default": "Add {remaining} more for free delivery", "max": 160},
+          {"name": "success_message", "type": "text", "label": "Reached message", "default": "You've unlocked free delivery", "max": 160}
+        ],
+        "children": "none",
+        "styles": ["spacing", "typography", "color", "border"],
+        "data_sources": ["cart"],
+        "a11y": {"role": "progressbar", "label_prop": "message"},
+        "version": "1.0.0",
+        "icon": "truck"
+      }
+    ],
+    "storefront_widgets": [
+      {"key": "cart_progress", "label": "Cart summary progress", "slot": "cart.summary", "component": "plugin.voltora.free-shipping-bar.progress", "props_from_settings": {"threshold_minor": "threshold_minor", "message": "message", "success_message": "success_message"}}
+    ]
+  },
+  "license": "MIT",
+  "docs": "Install, set the threshold to match your shipping rate rule, enable. The widget appears in the cart summary slot; designers can also place the component anywhere in the builder.",
+  "changelog": "1.0.0 — first release."
+}
