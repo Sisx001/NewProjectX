@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Wireless earbuds and charging case illustration">
+  <rect width="800" height="800" fill="#e5e8ec"/>
+  <ellipse cx="400" cy="660" rx="230" ry="22" fill="#000" opacity=".07"/>
+  <rect x="260" y="360" width="280" height="220" rx="70" fill="#2b2f36"/>
+  <path d="M260 450 H540" stroke="#454b55" stroke-width="4"/>
+  <circle cx="400" cy="450" r="9" fill="#6fe0a8"/>
+  <g transform="translate(250 180)"><circle cx="40" cy="40" r="42" fill="#f4f5f7" stroke="#cfd4da" stroke-width="3"/><rect x="48" y="70" width="22" height="90" rx="11" fill="#f4f5f7" stroke="#cfd4da" stroke-width="3"/></g>
+  <g transform="translate(430 180)"><circle cx="50" cy="40" r="42" fill="#f4f5f7" stroke="#cfd4da" stroke-width="3"/><rect x="20" y="70" width="22" height="90" rx="11" fill="#f4f5f7" stroke="#cfd4da" stroke-width="3"/></g>
+</svg>
