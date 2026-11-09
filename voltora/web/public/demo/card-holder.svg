@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Leather card holder illustration">
+  <rect width="800" height="800" fill="#ece3d9"/>
+  <ellipse cx="400" cy="660" rx="230" ry="22" fill="#000" opacity=".07"/>
+  <rect x="230" y="270" width="340" height="250" rx="26" fill="#a2683d"/>
+  <path d="M230 360 H570 V500 Q570 520 550 520 H250 Q230 520 230 500Z" fill="#b57a4b"/>
+  <path d="M250 372 H550" stroke="#8a552f" stroke-width="3" stroke-dasharray="10 8"/>
+  <rect x="290" y="236" width="110" height="140" rx="10" fill="#f7f3ec" stroke="#d9cdbb" stroke-width="3"/>
+  <rect x="410" y="246" width="110" height="130" rx="10" fill="#e8dfd0" stroke="#d9cdbb" stroke-width="3"/>
+</svg>
