@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "id": "voltora.order-notify",
+  "name": "Order alerts for Slack & Telegram",
+  "version": "1.0.0",
+  "publisher": "VOLTORA",
+  "description": "Posts a short, non-personal summary (order number, status, total) to a Slack incoming webhook or a Telegram chat when order events happen. Customer names, emails, phones and addresses are never sent.",
+  "hostApi": "^1.0.0",
+  "capabilities": ["events.subscribe", "notifications.chat"],
+  "permissions": ["orders.read"],
+  "settings": {
+    "type": "object",
+    "properties": {
+      "channel": {"type": "string", "enum": ["slack", "telegram"], "default": "slack", "title": "Send to"},
+      "telegram_chat_id": {"type": "string", "maxLength": 64, "default": "", "title": "Telegram chat id"},
+      "events": {"type": "array", "items": {"type": "string", "pattern": "^[a-z_]+(\\.[a-z_*]+)+$"}, "minItems": 1, "maxItems": 20, "default": ["order.*"], "title": "Events"}
+    },
+    "additionalProperties": false
+  },
+  "secrets": [
+    {"key": "slack_webhook_url", "label": "Slack incoming-webhook URL", "required": false, "description": "From Slack → Apps → Incoming Webhooks. Treated as a secret."},
+    {"key": "telegram_bot_token", "label": "Telegram bot token", "required": false, "description": "From @BotFather."}
+  ],
+  "allowedHosts": ["hooks.slack.com", "api.telegram.org"],
+  "extensions": {
+    "event_subscriptions": [
+      {"key": "slack", "events_setting": "events", "format": "slack", "url_secret": "slack_webhook_url", "when_setting": {"channel": "slack"}},
+      {"key": "telegram", "events_setting": "events", "format": "telegram", "telegram": {"token_secret": "telegram_bot_token", "chat_id_setting": "telegram_chat_id"}, "when_setting": {"channel": "telegram"}}
+    ]
+  },
+  "license": "MIT",
+  "docs": "Choose Slack or Telegram, add the webhook URL or bot token + chat id, then enable. Deliveries, retries and failures are visible in Developers → Webhooks.",
+  "changelog": "1.0.0 — first release."
+}
