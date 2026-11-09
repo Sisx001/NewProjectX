@@ -1,0 +1,345 @@
+[
+  {
+    "id": "catalog.products.admin",
+    "owner_domain": "catalog_inventory",
+    "title": "Product CRUD with variants, options matrix, media, categories, SEO, duplicate, delete guard",
+    "dependencies": [
+      "identity.rbac"
+    ],
+    "state": "developed_unverified",
+    "source_files": [
+      "backend/app/modules/catalog/api.py",
+      "backend/app/modules/catalog/products.py",
+      "backend/app/modules/catalog/service.py",
+      "web/src/admin/modules/catalog/ProductEditor.tsx",
+      "web/src/admin/modules/catalog/Products.tsx"
+    ],
+    "tests": [
+      "backend/tests/test_catalog.py"
+    ],
+    "visual_evidence": [],
+    "API_contract": "/api/catalog/products*",
+    "migration": "additive tables/columns via metadata (no Alembic revision yet)",
+    "remaining_risks": [
+      "Browser flows (editor, unsaved-change guard, mobile 390px) not yet exercised",
+      "No product revision history yet",
+      "Variant matrix capped at 250 variants/product"
+    ],
+    "last_verified": "2026-11-09 (pytest only; no browser check yet)"
+  },
+  {
+    "id": "catalog.taxonomy",
+    "owner_domain": "catalog_inventory",
+    "title": "Category tree (cycle-safe) and brand management",
+    "dependencies": [],
+    "state": "developed_unverified",
+    "source_files": [
+      "backend/app/modules/catalog/api.py",
+      "web/src/admin/modules/catalog/Taxonomy.tsx"
+    ],
+    "tests": [
+      "backend/tests/test_catalog.py"
+    ],
+    "visual_evidence": [],
+    "API_contract": "/api/catalog/categories*, /api/catalog/brands*",
+    "migration": "additive tables/columns via metadata (no Alembic revision yet)",
+    "remaining_risks": [
+      "Drag-and-drop ordering absent (numeric position only)"
+    ],
+    "last_verified": "2026-11-09 (pytest only; no browser check yet)"
+  },
+  {
+    "id": "catalog.media",
+    "owner_domain": "catalog_inventory",
+    "title": "Image upload (PNG/JPEG/WebP magic-byte validated, <=8 MB) and safe serving; SVG uploads rejected",
+    "dependencies": [],
+    "state": "developed_unverified",
+    "source_files": [
+      "backend/app/modules/catalog/api.py"
+    ],
+    "tests": [
+      "backend/tests/test_catalog.py"
+    ],
+    "visual_evidence": [],
+    "API_contract": "POST /api/catalog/media, GET /api/media/{file}",
+    "migration": "additive tables/columns via metadata (no Alembic revision yet)",
+    "remaining_risks": [
+      "Local-disk storage only; no thumbnails/resizing; no orphan-file cleanup job",
+      "Reverse proxy should also cap request body size"
+    ],
+    "last_verified": "2026-11-09 (pytest only; no browser check yet)"
+  },
+  {
+    "id": "catalog.sanitizer",
+    "owner_domain": "catalog_inventory",
+    "title": "Allow-list HTML sanitizer for product descriptions (stdlib html.parser)",
+    "dependencies": [],
+    "state": "developed_unverified",
+    "source_files": [
+      "backend/app/modules/catalog/service.py"
+    ],
+    "tests": [
+      "backend/tests/test_catalog.py"
+    ],
+    "visual_evidence": [],
+    "API_contract": "applied on every product write",
+    "migration": "additive tables/columns via metadata (no Alembic revision yet)",
+    "remaining_risks": [
+      "Not a full HTML5 parser; unknown tags are dropped, never re-written"
+    ],
+    "last_verified": "2026-11-09 (pytest only; no browser check yet)"
+  },
+  {
+    "id": "catalog.csv",
+    "owner_domain": "catalog_inventory",
+    "title": "CSV export and import (dry-run report then idempotent apply by handle+SKU, formula-injection guard)",
+    "dependencies": [],
+    "state": "developed_unverified",
+    "source_files": [
+      "backend/app/modules/catalog/csvio.py",
+      "web/src/admin/modules/catalog/Products.tsx"
+    ],
+    "tests": [
+      "backend/tests/test_catalog.py"
+    ],
+    "visual_evidence": [],
+    "API_contract": "GET /api/catalog/products/export.csv, POST /api/catalog/products/import",
+    "migration": "additive tables/columns via metadata (no Alembic revision yet)",
+    "remaining_risks": [
+      "Stock quantities are not imported (stock changes only via inventory ledger)",
+      "5,000 rows / 5 MB per import"
+    ],
+    "last_verified": "2026-11-09 (pytest only; no browser check yet)"
+  },
+  {
+    "id": "catalog.bulk",
+    "owner_domain": "catalog_inventory",
+    "title": "Bulk status/tag/archive actions and saved views on the product list",
+    "dependencies": [],
+    "state": "developed_unverified",
+    "source_files": [
+      "backend/app/modules/catalog/api.py",
+      "web/src/admin/modules/catalog/Products.tsx"
+    ],
+    "tests": [
+      "backend/tests/test_catalog.py"
+    ],
+    "visual_evidence": [],
+    "API_contract": "POST /api/catalog/products/bulk",
+    "migration": "additive tables/columns via metadata (no Alembic revision yet)",
+    "remaining_risks": [
+      "Saved views are per-browser (localStorage)"
+    ],
+    "last_verified": "2026-11-09 (pytest only; no browser check yet)"
+  },
+  {
+    "id": "catalog.storefront",
+    "owner_domain": "catalog_inventory",
+    "title": "Public catalog API per docs/API_CONTRACTS.md: categories, listing with facets, detail, suggest; stock-aware in_stock/available",
+    "dependencies": [
+      "inventory.ledger"
+    ],
+    "state": "developed_unverified",
+    "source_files": [
+      "backend/app/modules/catalog/store_api.py"
+    ],
+    "tests": [
+      "backend/tests/test_catalog.py"
+    ],
+    "visual_evidence": [],
+    "API_contract": "/api/store/categories, /api/store/products, /api/store/products/{slug}, /api/store/search/suggest",
+    "migration": "additive tables/columns via metadata (no Alembic revision yet)",
+    "remaining_risks": [
+      "Search is ILIKE-based (no ranking/typo tolerance); consider trigram/FTS index for large catalogs",
+      "Facets reflect the filtered result set (selected facet values collapse)",
+      "No response caching yet"
+    ],
+    "last_verified": "2026-11-09 (pytest only; no browser check yet)"
+  },
+  {
+    "id": "catalog.demo",
+    "owner_domain": "catalog_inventory",
+    "title": "Labelled demo catalog (10 products, 4 categories, 3 brands, original SVG illustrations) seeded on demand; removable and audited",
+    "dependencies": [],
+    "state": "developed_unverified",
+    "source_files": [
+      "backend/app/modules/catalog/demo.py",
+      "web/public/demo/*.svg"
+    ],
+    "tests": [
+      "backend/tests/test_catalog.py"
+    ],
+    "visual_evidence": [],
+    "API_contract": "DELETE /api/catalog/demo",
+    "migration": "additive tables/columns via metadata (no Alembic revision yet)",
+    "remaining_risks": [
+      "SVG artwork not yet reviewed visually in a browser"
+    ],
+    "last_verified": "2026-11-09 (pytest only; no browser check yet)"
+  },
+  {
+    "id": "inventory.warehouses",
+    "owner_domain": "catalog_inventory",
+    "title": "Warehouses CRUD with single default and safe deactivate/delete",
+    "dependencies": [],
+    "state": "developed_unverified",
+    "source_files": [
+      "backend/app/modules/inventory/api.py",
+      "web/src/admin/modules/inventory/Warehouses.tsx"
+    ],
+    "tests": [
+      "backend/tests/test_inventory.py"
+    ],
+    "visual_evidence": [],
+    "API_contract": "/api/inventory/warehouses*",
+    "migration": "additive tables/columns via metadata (no Alembic revision yet)",
+    "remaining_risks": [
+      "Browser flows not exercised"
+    ],
+    "last_verified": "2026-11-09 (pytest only; no browser check yet)"
+  },
+  {
+    "id": "inventory.stock_ops",
+    "owner_domain": "catalog_inventory",
+    "title": "Receive, adjust (reason codes), transfer (atomic), cycle count, reorder points; all through ledger.apply_movement",
+    "dependencies": [
+      "inventory.ledger"
+    ],
+    "state": "developed_unverified",
+    "source_files": [
+      "backend/app/modules/inventory/service.py",
+      "backend/app/modules/inventory/api.py",
+      "web/src/admin/modules/inventory/Inventory.tsx"
+    ],
+    "tests": [
+      "backend/tests/test_inventory.py"
+    ],
+    "visual_evidence": [],
+    "API_contract": "/api/inventory/{receive,adjust,transfer,count,reorder-point}",
+    "migration": "additive tables/columns via metadata (no Alembic revision yet)",
+    "remaining_risks": [
+      "Concurrency proven with 16 threads on one row; no multi-variant deadlock stress test"
+    ],
+    "last_verified": "2026-11-09 (pytest only; no browser check yet)"
+  },
+  {
+    "id": "inventory.ledger_views",
+    "owner_domain": "catalog_inventory",
+    "title": "Stock overview, movement ledger with filters, low-stock report, nav counter",
+    "dependencies": [],
+    "state": "developed_unverified",
+    "source_files": [
+      "backend/app/modules/inventory/api.py",
+      "web/src/admin/modules/inventory/Inventory.tsx"
+    ],
+    "tests": [
+      "backend/tests/test_inventory.py"
+    ],
+    "visual_evidence": [],
+    "API_contract": "/api/inventory/{stock,movements,low-stock}, GET /api/admin/nav-counts (inventory)",
+    "migration": "additive tables/columns via metadata (no Alembic revision yet)",
+    "remaining_risks": [
+      "Ledger export not implemented"
+    ],
+    "last_verified": "2026-11-09 (pytest only; no browser check yet)"
+  },
+  {
+    "id": "inventory.purchasing",
+    "owner_domain": "catalog_inventory",
+    "title": "Suppliers and purchase orders (draft/ordered/partial/received/cancelled) receiving into stock",
+    "dependencies": [
+      "inventory.stock_ops"
+    ],
+    "state": "developed_unverified",
+    "source_files": [
+      "backend/app/modules/inventory/api.py",
+      "web/src/admin/modules/inventory/Purchasing.tsx",
+      "web/src/admin/modules/inventory/Warehouses.tsx"
+    ],
+    "tests": [
+      "backend/tests/test_inventory.py"
+    ],
+    "visual_evidence": [],
+    "API_contract": "/api/inventory/suppliers*, /api/inventory/purchase-orders*",
+    "migration": "additive tables/columns via metadata (no Alembic revision yet)",
+    "remaining_risks": [
+      "No supplier email/PDF dispatch",
+      "Landed cost / returns-to-supplier not modelled",
+      "Variant cost is not auto-updated on receipt"
+    ],
+    "last_verified": "2026-11-09 (pytest only; no browser check yet)"
+  },
+  {
+    "id": "customers.admin",
+    "owner_domain": "catalog_inventory",
+    "title": "Customer list/search/filter, detail, notes, tags, consent; PII masking without customers.pii",
+    "dependencies": [
+      "identity.rbac"
+    ],
+    "state": "developed_unverified",
+    "source_files": [
+      "backend/app/modules/customers/api.py",
+      "backend/app/modules/customers/service.py",
+      "web/src/admin/modules/customers/Customers.tsx",
+      "web/src/admin/modules/customers/CustomerDetail.tsx"
+    ],
+    "tests": [
+      "backend/tests/test_customers.py"
+    ],
+    "visual_evidence": [],
+    "API_contract": "/api/customers*",
+    "migration": "additive tables/columns via metadata (no Alembic revision yet)",
+    "remaining_risks": [
+      "Customer creation/merge not offered (customers originate from checkout/registration)",
+      "Order history on the detail page links to /admin/orders?customer=<id> (commerce workstream)"
+    ],
+    "last_verified": "2026-11-09 (pytest only; no browser check yet)"
+  },
+  {
+    "id": "customers.privacy",
+    "owner_domain": "catalog_inventory",
+    "title": "Customer data export (JSON) and erasure (anonymise PII, keep order financial records), both audited",
+    "dependencies": [
+      "customers.admin"
+    ],
+    "state": "developed_unverified",
+    "source_files": [
+      "backend/app/modules/customers/api.py"
+    ],
+    "tests": [
+      "backend/tests/test_customers.py"
+    ],
+    "visual_evidence": [],
+    "API_contract": "POST /api/customers/{id}/export, POST /api/customers/{id}/erase",
+    "migration": "additive tables/columns via metadata (no Alembic revision yet)",
+    "remaining_risks": [
+      "Order-level snapshots (shipping name/phone/address on orders) must be anonymised by the commerce module on the customer.erased event; not yet wired",
+      "Export includes orders only if an Order model with customer_id exists"
+    ],
+    "last_verified": "2026-11-09 (pytest only; no browser check yet)"
+  },
+  {
+    "id": "shell.search_and_counters",
+    "owner_domain": "catalog_inventory",
+    "title": "Command-palette search for products/customers and inventory low-stock nav counter",
+    "dependencies": [],
+    "state": "developed_unverified",
+    "source_files": [
+      "backend/app/modules/catalog/service.py",
+      "backend/app/modules/customers/service.py",
+      "backend/app/modules/inventory/service.py"
+    ],
+    "tests": [
+      "backend/tests/test_catalog.py",
+      "backend/tests/test_inventory.py",
+      "backend/tests/test_customers.py"
+    ],
+    "visual_evidence": [],
+    "API_contract": "GET /api/admin/search, GET /api/admin/nav-counts",
+    "migration": "additive tables/columns via metadata (no Alembic revision yet)",
+    "remaining_risks": [
+      "Counter is computed per request (no cache)"
+    ],
+    "last_verified": "2026-11-09 (pytest only; no browser check yet)"
+  }
+]
